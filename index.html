@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RLML - Rocket League Mechanics List</title>
+    <title>RLML - The Top 50 List</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -15,83 +13,33 @@
         <div class="header-container">
             <h1 class="logo">RLML</h1>
             <nav>
-                <a href="#list" class="nav-link">Top 50 List</a>
-                <a href="#leaderboard" class="nav-link">Leaderboard</a>
-                <a href="#submit-record" class="nav-link">Submit a Record</a>
-                <a href="#submit-mechanic" class="nav-link">Submit a Mechanic</a>
+                <a href="index.html" class="nav-link active">Top 50 List</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="submit.html" class="nav-link">Submit</a>
+                <a href="rules.html" class="nav-link">Rules</a>
+                <a href="#" class="nav-link profile-link">Login / Sign Up</a>
             </nav>
         </div>
     </header>
 
-    <main class="content">
-        <section id="list" class="content-section">
-            <h2 class="section-title">The Top 50 Mechanics List</h2>
-            <div class="list-container">
+    <main class="main-layout">
+        <section class="left-panel content-section">
+            <h2>Mechanics List</h2>
+            <div id="mechanics-list-container">
                 </div>
         </section>
 
-        <section id="leaderboard" class="content-section">
-            <h2 class="section-title">RLML Leaderboard</h2>
-            <div class="leaderboard-container">
-                <table class="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Username</th>
-                            <th>RLML Rank</th>
-                            <th>Total Points</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>ExamplePlayer1</td>
-                            <td>Grand Champion</td>
-                            <td>1250</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>ExamplePlayer2</td>
-                            <td>Champion</td>
-                            <td>890</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <section class="center-panel content-section">
+            <div id="mechanic-details-container">
+                <p class="placeholder-text">Select a mechanic from the list to view details.</p>
+                </div>
         </section>
 
-        <section id="submit-record" class="content-section">
-            <h2 class="section-title">Submit a Record</h2>
-            <p>Showcase your skills! Use this section to submit a video of you completing a mechanic from the list to earn points and climb the leaderboard.</p>
-            <form class="submit-form">
-                <label for="username">Your Username:</label>
-                <input type="text" id="username" name="username" required>
-                
-                <label for="mechanic-name">Mechanic Name:</label>
-                <input type="text" id="mechanic-name" name="mechanic-name" required>
-
-                <label for="video-link">Video Link (YouTube, Gfycat, Streamable):</label>
-                <input type="url" id="video-link" name="video-link" required>
-
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-
-        <section id="submit-mechanic" class="content-section">
-            <h2 class="section-title">Suggest a New Mechanic</h2>
-            <p>Have an idea for a new, difficult mechanic? Submit it here to be considered for the list!</p>
-            <form class="submit-form">
-                <label for="suggested-name">Suggested Mechanic Name:</label>
-                <input type="text" id="suggested-name" name="suggested-name" required>
-
-                <label for="suggested-video">Video Link:</label>
-                <input type="url" id="suggested-video" name="suggested-video" required>
-
-                <label for="explanation">Explanation of the Mechanic:</label>
-                <textarea id="explanation" name="explanation" rows="4" required></textarea>
-
-                <button type="submit">Submit Suggestion</button>
-            </form>
+        <section class="right-panel content-section">
+            <h2>Records</h2>
+            <div id="records-container">
+                <p class="placeholder-text">Records for the selected mechanic will appear here.</p>
+                </div>
         </section>
     </main>
 
