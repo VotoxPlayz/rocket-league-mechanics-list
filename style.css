@@ -5,6 +5,7 @@
     --card-bg: #1e1e1e;
     --text-color: #f0f0f0;
     --border-color: #333;
+    --accent-color: #00aaff;
 }
 
 body {
@@ -16,6 +17,7 @@ body {
     padding: 0;
 }
 
+/* Header & Nav */
 .main-header {
     background: linear-gradient(to right, var(--primary-blue), var(--primary-orange));
     padding: 20px 0;
@@ -39,9 +41,10 @@ body {
     font-weight: 700;
     color: var(--text-color);
     letter-spacing: 2px;
+    text-decoration: none;
 }
 
-.nav-link {
+nav .nav-link {
     color: var(--text-color);
     text-decoration: none;
     font-size: 1.1em;
@@ -50,11 +53,16 @@ body {
     transition: color 0.3s ease;
 }
 
-.nav-link:hover {
+nav .nav-link.active {
+    color: var(--accent-color);
+}
+
+nav .nav-link:hover {
     color: var(--primary-orange);
 }
 
-.content {
+/* Page Content Containers */
+.content, .main-layout {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
@@ -76,42 +84,151 @@ body {
     color: var(--primary-orange);
 }
 
-/* List Styling */
-.list-container {
+/* Main List Layout */
+.main-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: 2fr 4fr 2fr;
+    gap: 20px;
+    align-items: flex-start;
 }
 
-.mechanic-card {
-    background-color: #2a2a2a;
-    border-radius: 8px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.mechanic-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-}
-
-.mechanic-card h3 {
-    margin-top: 0;
+.left-panel h2, .center-panel h2, .right-panel h2 {
     font-size: 1.5em;
+    text-align: center;
     color: var(--primary-blue);
+    margin-top: 0;
 }
 
-.mechanic-card p {
-    font-size: 0.9em;
+/* Left Panel - Mechanics List */
+#mechanics-list-container {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.mechanic-card .points {
-    font-weight: 700;
+.list-item {
+    background-color: #2a2a2a;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.list-item:hover {
+    background-color: #383838;
+    transform: translateX(5px);
+}
+
+.list-item.active {
+    background-color: var(--primary-orange);
+    color: var(--dark-bg);
+    font-weight: bold;
+    border-color: var(--primary-orange);
+}
+
+.list-item h3 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+/* Center Panel - Mechanic Details */
+#mechanic-details-container {
+    min-height: 500px; /* Adjust as needed */
+}
+
+.placeholder-text {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+    padding-top: 20px;
+}
+
+.mechanic-detail h3 {
+    text-align: center;
+    font-size: 2em;
     color: var(--primary-orange);
+    margin-bottom: 10px;
 }
 
-/* Leaderboard Styling */
+.mechanic-info {
+    font-size: 1.1em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.mechanic-info span {
+    font-weight: bold;
+}
+
+.video-embed {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.video-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    border: none;
+}
+
+.mechanic-description-box {
+    background-color: #2a2a2a;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.tags-list, .history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.tag-item, .history-item {
+    background-color: var(--primary-blue);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+}
+
+/* Right Panel - Records */
+#records-container h2 {
+    text-align: left;
+}
+.records-list {
+    list-style: none;
+    padding: 0;
+}
+
+.records-list li {
+    background-color: #2a2a2a;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.records-list a {
+    color: var(--primary-orange);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Leaderboard Page */
 .leaderboard-table {
     width: 100%;
     border-collapse: collapse;
@@ -130,7 +247,13 @@ body {
     font-weight: 600;
 }
 
-/* Form Styling */
+.disclaimer {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+}
+
+/* Submit & Rules Pages */
 .submit-form {
     display: flex;
     flex-direction: column;
@@ -141,7 +264,7 @@ body {
     font-weight: 600;
 }
 
-.submit-form input, .submit-form textarea {
+.submit-form input, .submit-form textarea, .submit-form select {
     background-color: #333;
     border: 1px solid var(--border-color);
     color: var(--text-color);
@@ -166,6 +289,15 @@ body {
     background-color: var(--primary-orange);
 }
 
+.rules-container ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.rules-container li {
+    margin-bottom: 10px;
+}
+
 .main-footer {
     text-align: center;
     padding: 20px;
@@ -174,20 +306,22 @@ body {
     margin-top: 40px;
 }
 
-/* Video Embeds */
-.video-embed {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
-    margin-top: 15px;
-}
-
-.video-embed iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    border: none;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+    .left-panel, .center-panel, .right-panel {
+        width: 100%;
+    }
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    nav {
+        margin-top: 10px;
+    }
+    nav .nav-link {
+        margin: 0 8px;
+    }
 }
