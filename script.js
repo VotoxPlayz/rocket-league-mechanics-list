@@ -60,8 +60,10 @@ const listContainer = document.getElementById('mechanics-list-container');
 const detailsContainer = document.getElementById('mechanic-details-container');
 const recordsContainer = document.getElementById('records-container');
 
-// Function to render the list of mechanics on the left
+// Function to render the list of mechanics on the left panel of the index.html page
 function renderMechanicsList() {
+    if (!listContainer) return; // Exit if not on the main page
+
     listContainer.innerHTML = '';
     mechanicsList.forEach(mechanic => {
         const listItem = document.createElement('div');
@@ -79,6 +81,8 @@ function renderMechanicsList() {
 function selectMechanic(rank) {
     const selectedMechanic = mechanicsList.find(m => m.rank === rank);
 
+    if (!detailsContainer || !recordsContainer || !selectedMechanic) return; // Exit if on a different page or mechanic not found
+
     // Clear previous details
     detailsContainer.innerHTML = '';
     recordsContainer.innerHTML = '<h2>Records</h2>';
@@ -87,48 +91,49 @@ function selectMechanic(rank) {
     document.querySelectorAll('.list-item').forEach(item => {
         item.classList.remove('active');
     });
-    document.querySelector(`.list-item[data-rank="${rank}"]`).classList.add('active');
+    const activeItem = document.querySelector(`.list-item[data-rank="${rank}"]`);
+    if(activeItem) {
+        activeItem.classList.add('active');
+    }
 
-    if (selectedMechanic) {
-        // Render details in the center panel
-        const detailHtml = `
-            <div class="mechanic-detail">
-                <h3>#${selectedMechanic.rank}. ${selectedMechanic.name}</h3>
-                <p class="mechanic-info">Points: <span>${selectedMechanic.points}</span></p>
-                <div class="video-embed">
-                    <iframe src="${selectedMechanic.videoUrl}" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <div class="mechanic-description-box">
-                    <h4>Description</h4>
-                    <p>${selectedMechanic.description}</p>
-                </div>
-                <h4>Tags</h4>
-                <ul class="tags-list">
-                    ${selectedMechanic.tags.map(tag => `<li class="tag-item">${tag}</li>`).join('')}
-                </ul>
-                <h4>Position History</h4>
-                <ul class="history-list">
-                    ${selectedMechanic.positionHistory.map(history => `<li class="history-item">${history}</li>`).join('')}
-                </ul>
+    // Render details in the center panel
+    const detailHtml = `
+        <div class="mechanic-detail">
+            <h3>#${selectedMechanic.rank}. ${selectedMechanic.name}</h3>
+            <p class="mechanic-info">Points: <span>${selectedMechanic.points}</span></p>
+            <div class="video-embed">
+                <iframe src="${selectedMechanic.videoUrl}" frameborder="0" allowfullscreen></iframe>
             </div>
-        `;
-        detailsContainer.innerHTML = detailHtml;
+            <div class="mechanic-description-box">
+                <h4>Description</h4>
+                <p>${selectedMechanic.description}</p>
+            </div>
+            <h4>Tags</h4>
+            <ul class="tags-list">
+                ${selectedMechanic.tags.map(tag => `<li class="tag-item">${tag}</li>`).join('')}
+            </ul>
+            <h4>Position History</h4>
+            <ul class="history-list">
+                ${selectedMechanic.positionHistory.map(history => `<li class="history-item">${history}</li>`).join('')}
+            </ul>
+        </div>
+    `;
+    detailsContainer.innerHTML = detailHtml;
 
-        // Render records in the right panel
-        if (selectedMechanic.records.length > 0) {
-            const recordsHtml = `
-                <ul class="records-list">
-                    ${selectedMechanic.records.map(record => `
-                        <li>
-                            <a href="${record.videoLink}" target="_blank">${record.username}</a> on ${record.date}
-                        </li>
-                    `).join('')}
-                </ul>
-            `;
-            recordsContainer.innerHTML += recordsHtml;
-        } else {
-            recordsContainer.innerHTML += '<p class="placeholder-text">No records submitted yet.</p>';
-        }
+    // Render records in the right panel
+    if (selectedMechanic.records.length > 0) {
+        const recordsHtml = `
+            <ul class="records-list">
+                ${selectedMechanic.records.map(record => `
+                    <li>
+                        <a href="${record.videoLink}" target="_blank">${record.username}</a> on ${record.date}
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+        recordsContainer.innerHTML += recordsHtml;
+    } else {
+        recordsContainer.innerHTML += '<p class="placeholder-text">No records submitted yet.</p>';
     }
 }
 
@@ -160,9 +165,10 @@ if (mechanicForm) {
     });
 }
 
-// Initial render when the page loads
+// Initial render logic
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.body.classList.contains('main-layout')) {
+    // This check is now more robust, looking for specific container elements
+    if (listContainer && detailsContainer && recordsContainer) {
         renderMechanicsList();
         // Automatically select the first mechanic on load
         if (mechanicsList.length > 0) {
