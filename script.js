@@ -1,116 +1,172 @@
-// This data will be used to populate the list dynamically
+// Data for the mechanics list, now with more details
 const mechanicsList = [
     {
         rank: 1,
         name: 'No-Bounce Psycho',
         points: 500,
         description: 'Maintaining a perfect air dribble from your own side of the field without the ball touching the ground, then hitting a psycho shot into the goal.',
-        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // Example video, replace with real one
+        tags: ['Air Dribble', 'Psycho', 'Hard'],
+        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Example video
+        records: [
+            { username: 'Lethamyr', videoLink: 'https://www.youtube.com/watch?v=your-leth-video', date: '2025-01-15' },
+            { username: 'Mister RL', videoLink: 'https://www.youtube.com/watch?v=your-mister-video', date: '2025-02-20' }
+        ],
+        positionHistory: ['#1 (Initial)', '#2 (Nov 2024)']
     },
     {
         rank: 2,
         name: 'Quad Flip Reset Musty',
         points: 480,
         description: 'Executing four consecutive flip resets followed by a musty flick to score a goal.',
-        videoUrl: 'https://www.youtube.com/embed/exampleVideoId2'
+        tags: ['Flip Reset', 'Musty', 'Insane'],
+        videoUrl: 'https://www.youtube.com/embed/exampleVideoId2',
+        records: [],
+        positionHistory: ['#2 (Initial)']
     },
     {
         rank: 3,
         name: 'Aero Dribble Double Tap',
         points: 450,
         description: 'Maintaining an air dribble with no boost to the backboard, then double tapping it into the goal.',
-        videoUrl: 'https://www.youtube.com/embed/exampleVideoId3'
+        tags: ['Air Dribble', 'Double Tap', 'High Tier'],
+        videoUrl: 'https://www.youtube.com/embed/exampleVideoId3',
+        records: [],
+        positionHistory: ['#3 (Initial)']
     },
     {
         rank: 4,
-        name: 'Triple Flip Reset Pogo',
-        points: 430,
-        description: 'A difficult combination of three flip resets leading directly into a pogo shot.',
-        videoUrl: 'https://www.youtube.com/embed/exampleVideoId4'
+        name: 'Breezi Flick',
+        points: 400,
+        description: 'A difficult backward flick that generates significant power and is used for quick shots.',
+        tags: ['Flick', 'Ground Mechanic', 'High Tier'],
+        videoUrl: 'https://www.youtube.com/embed/exampleVideoId9',
+        records: [],
+        positionHistory: ['#4 (Initial)']
     },
     {
         rank: 5,
-        name: 'Ceiling Pinch Double Tap',
-        points: 400,
-        description: 'Pinching the ball off the ceiling to generate extreme speed, then double tapping it with precise timing.',
-        videoUrl: 'https://www.youtube.com/embed/exampleVideoId5'
-    },
-    {
-        rank: 6,
-        name: 'Maktuf-Stall Flip Reset',
-        points: 380,
-        description: 'A flip reset followed by a stall to adjust momentum for the follow-up shot.',
-        videoUrl: 'https://www.youtube.com/embed/exampleVideoId6'
-    },
-    {
-        rank: 7,
-        name: 'Wall Pinch to Musty',
-        points: 350,
-        description: 'Pinches the ball off the side wall and quickly gets under it to perform a musty flick.',
-        videoUrl: 'https://www.youtube.com/embed/exampleVideoId7'
-    },
-    {
-        rank: 8,
-        name: 'Pre-Flip Double Touch',
-        points: 330,
-        description: 'A pre-flipped aerial touch on the backboard, followed by an air roll to get a double-tap.',
-        videoUrl: 'https://www.youtube.com/embed/exampleVideoId8'
-    },
-    {
-        rank: 9,
-        name: 'Breezi Flick',
-        points: 310,
-        description: 'A difficult backward flick that generates significant power and is used for quick shots.',
-        videoUrl: 'https://www.youtube.com/embed/exampleVideoId9'
-    },
-    {
-        rank: 10,
         name: 'Musty Flick',
-        points: 290,
+        points: 350,
         description: 'A backward-facing flip that generates a powerful shot, a classic and fundamental trickshot.',
-        videoUrl: 'https://www.youtube.com/embed/exampleVideoId10'
+        tags: ['Flick', 'Fundamental'],
+        videoUrl: 'https://www.youtube.com/embed/exampleVideoId10',
+        records: [],
+        positionHistory: ['#5 (Initial)']
     },
-    // ... add more mechanics up to 50
+    // ... add all 50 mechanics here
 ];
 
-// Function to create a mechanic card HTML element
-function createMechanicCard(mechanic) {
-    const card = document.createElement('div');
-    card.className = 'mechanic-card';
+const listContainer = document.getElementById('mechanics-list-container');
+const detailsContainer = document.getElementById('mechanic-details-container');
+const recordsContainer = document.getElementById('records-container');
 
-    card.innerHTML = `
-        <h3>#${mechanic.rank}. ${mechanic.name}</h3>
-        <p class="points">Points: ${mechanic.points}</p>
-        <p>${mechanic.description}</p>
-        ${mechanic.videoUrl ? `
-            <div class="video-embed">
-                <iframe src="${mechanic.videoUrl}" frameborder="0" allowfullscreen></iframe>
-            </div>
-        ` : ''}
-    `;
-
-    return card;
-}
-
-// Function to render the entire list
+// Function to render the list of mechanics on the left
 function renderMechanicsList() {
-    const listContainer = document.querySelector('.list-container');
+    listContainer.innerHTML = '';
     mechanicsList.forEach(mechanic => {
-        const card = createMechanicCard(mechanic);
-        listContainer.appendChild(card);
+        const listItem = document.createElement('div');
+        listItem.className = 'list-item';
+        listItem.dataset.rank = mechanic.rank;
+        listItem.innerHTML = `<h3>#${mechanic.rank}. ${mechanic.name}</h3>`;
+        listItem.addEventListener('click', () => {
+            selectMechanic(mechanic.rank);
+        });
+        listContainer.appendChild(listItem);
     });
 }
 
-// Run the function when the page loads
-document.addEventListener('DOMContentLoaded', renderMechanicsList);
+// Function to render the selected mechanic's details in the center and right panels
+function selectMechanic(rank) {
+    const selectedMechanic = mechanicsList.find(m => m.rank === rank);
 
-// Simple form submission handlers (client-side only)
-document.getElementById('submit-record').addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Record submitted! Since this is a static site, this data will not be saved. You will need to manually add it to the leaderboard HTML.');
-});
+    // Clear previous details
+    detailsContainer.innerHTML = '';
+    recordsContainer.innerHTML = '<h2>Records</h2>';
 
-document.getElementById('submit-mechanic').addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Mechanic suggestion submitted! Since this is a static site, this data will not be saved. You will need to manually review and add it to the list HTML.');
+    // Highlight the selected item in the list
+    document.querySelectorAll('.list-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    document.querySelector(`.list-item[data-rank="${rank}"]`).classList.add('active');
+
+    if (selectedMechanic) {
+        // Render details in the center panel
+        const detailHtml = `
+            <div class="mechanic-detail">
+                <h3>#${selectedMechanic.rank}. ${selectedMechanic.name}</h3>
+                <p class="mechanic-info">Points: <span>${selectedMechanic.points}</span></p>
+                <div class="video-embed">
+                    <iframe src="${selectedMechanic.videoUrl}" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="mechanic-description-box">
+                    <h4>Description</h4>
+                    <p>${selectedMechanic.description}</p>
+                </div>
+                <h4>Tags</h4>
+                <ul class="tags-list">
+                    ${selectedMechanic.tags.map(tag => `<li class="tag-item">${tag}</li>`).join('')}
+                </ul>
+                <h4>Position History</h4>
+                <ul class="history-list">
+                    ${selectedMechanic.positionHistory.map(history => `<li class="history-item">${history}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+        detailsContainer.innerHTML = detailHtml;
+
+        // Render records in the right panel
+        if (selectedMechanic.records.length > 0) {
+            const recordsHtml = `
+                <ul class="records-list">
+                    ${selectedMechanic.records.map(record => `
+                        <li>
+                            <a href="${record.videoLink}" target="_blank">${record.username}</a> on ${record.date}
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+            recordsContainer.innerHTML += recordsHtml;
+        } else {
+            recordsContainer.innerHTML += '<p class="placeholder-text">No records submitted yet.</p>';
+        }
+    }
+}
+
+// Event listeners for form submissions on the submit.html page
+const recordForm = document.getElementById('record-form');
+const mechanicForm = document.getElementById('mechanic-form');
+
+if (recordForm) {
+    recordForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(recordForm);
+        let message = 'Record Submission Details:\n';
+        for (const [key, value] of formData.entries()) {
+            message += `${key}: ${value}\n`;
+        }
+        alert(message + '\nThis data is not saved. You must manually add it to the leaderboard and list in the script.js file.');
+    });
+}
+
+if (mechanicForm) {
+    mechanicForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(mechanicForm);
+        let message = 'Mechanic Suggestion Details:\n';
+        for (const [key, value] of formData.entries()) {
+            message += `${key}: ${value}\n`;
+        }
+        alert(message + '\nThis data is not saved. You must manually add this to the list and assign a rank.');
+    });
+}
+
+// Initial render when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.body.classList.contains('main-layout')) {
+        renderMechanicsList();
+        // Automatically select the first mechanic on load
+        if (mechanicsList.length > 0) {
+            selectMechanic(mechanicsList[0].rank);
+        }
+    }
 });
